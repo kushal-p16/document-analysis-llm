@@ -7,7 +7,14 @@ from src.splitter import split_into_passages
 
 # Load Groq API key
 load_dotenv()
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
+# Initialize Groq client - it will fail gracefully if API key is missing
+try:
+    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+except Exception as e:
+    print(f"Warning: Groq client initialization failed: {e}")
+    print("GROQ_API_KEY environment variable not set. Set it before using the API.")
+    client = None
 
 MODEL = "llama-3.1-8b-instant"   # 🔥 NEW WORKING MODEL
 
@@ -15,6 +22,8 @@ class PDFEngine:
     def __init__(self):
         self.passages = None
         self.summary = None
+        if client is None:
+            raise RuntimeError("GROQ_API_KEY environment variable not set. Cannot initialize PDFEngine.")
 
     def load_pdf(self, pdf_path):
         text_path = "./data/extracted.txt"
