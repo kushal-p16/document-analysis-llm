@@ -1,0 +1,184 @@
+VIDYAVARDHAKA COLLEGE OF ENGINEERING
+(Autonomous, affiliated to VTU)
+DEPARTMENT OF
+CSE (ARTIFICIAL INTELLIGENCE & MACHINE LEARNING)
+OPERATING SYSTEM
+(BCIOS303)
+“Dining Philosophers problem”
+Submitted in partial fulfillment of the requirement for the completion of III semester of
+BACHELOR OF ENGINEERING
+Submitted by:
+INCHARA C S 4VV24CI165
+INDU KIRAN C 4VV24CI066
+K U S H A L P 4VV24CI077
+LAKSHYA S 4VV24CI081
+Under the guidance of:
+Prof.Prashant M V
+Department of
+CSE(AIML)
+VIDYAVARDHAKA COLLEGE OF ENGINEERING
+DEPARTMENT OF CSE (ARTIFICIAL INTELLIGENCE & MACHINE LEARNING)
+CERTIFICATE
+Certified that Activity Based Assignment entitled “Dining Philosophers problem” is a bonafide
+work carried out by INCHARA C S (4VV24CI063), INDUKIRAN C (4VV24CI066), KUSHAL
+P (4VV24CI077), LAKSHYA S (4VV24CI081), in partial fulfillment of the requirement for the
+completion of III semester in CSE(AI&ML) of Vidyavardhaka College of Engineering during the
+year 2025-26. It is certified that all corrections/suggestions indicated for Internal Assessment has
+been incorporated in the report. The report has been approved as it satisfies the academic
+requirements with respect to Activity Based Assessment.
+Signature of the Guide
+Prof. Prashant M V
+Department of CSE(AIML)
+Table of Contents
+1. Introduction 4
+2. Dining Philosophers 5
+3. Technologies Used 7
+4. Output 8
+5. Conclusion 9
+INTRODUCTION
+INTRODUCTION
+Operating Systems form the backbone of modern computing systems by managing hardware resources
+and providing essential services to application programs. One of the most critical responsibilities of an
+operating system is the efficient management of shared resources in a concurrent environment. When
+multiple processes or threads execute simultaneously, improper synchronization can lead to serious
+problems such as race conditions, starvation, and deadlock. These issues can severely degrade system
+performance and reliability if not handled correctly.
+The Dining Philosophers Problem is a classical synchronization problem in Operating Systems that
+illustrates the challenges of resource allocation among multiple competing processes. It demonstrates
+how deadlock can occur when several processes compete for limited shared resources without proper
+coordination. Although the problem is theoretical, the concepts derived from it are directly applicable to
+real-world systems such as database management systems, operating systems, traffic control systems,
+and distributed computing environments.
+This project aims to demonstrate the Dining Philosophers Problem using a real-world Airport Runway
+Management System analogy. In this simulation, airplanes represent concurrent processes, while airport
+runways represent shared resources. Each airplane requires access to two runways simultaneously to
+perform landing or takeoff operations, closely mirroring the requirement of philosophers needing two
+forks to eat. A centralized Traffic Controller acts as a monitor to manage synchronization and ensure
+safe access to runways.
+The objective of this project is to provide a clear and interactive understanding of:
+Process synchronization
+Deadlock formation
+Deadlock avoidance using monitors and condition variables
+The project is implemented as a simulation-based system, making it easier to visualize and understand
+complex Operating System concepts. Technologies involved include multithreading concepts,
+synchronization mechanisms, monitors, and condition variables
+DINING PHILOSOPHERS PROBLEM
+2.1 Project Overview
+The project simulates an airport environment where multiple airplanes attempt to land or take off using a
+limited number of runways. Each airplane operates as an independent thread executing concurrently. To
+complete its operation, an airplane must acquire two runways simultaneously, analogous to a philosopher
+acquiring two forks. If the required runways are unavailable, the airplane must wait until they become free.
+The system operates in two distinct modes:
+Deadlock Demonstration Mode, where unsafe resource allocation is allowed, leading to deadlock.
+Safe Mode, where a monitor-based synchronization mechanism prevents deadlock.
+This dual-mode approach allows both the demonstration of deadlock and the implementation of deadlock
+avoidance techniques, which is essential for academic understanding.
+2.2 Working Principle
+When the simulation begins, multiple airplane threads are created. Each airplane repeatedly cycles through the
+following states:
+Flying (thinking state)
+Requesting runways
+Waiting for runways
+Landing or taking off (critical section)
+Releasing runways
+The Traffic Controller monitor governs all access to runways. Airplanes cannot directly access runways without
+approval from the monitor, ensuring controlled synchronization.
+2.3 Logical Flow of Operations
+The airplane thread requests permission to land or take off.
+The Traffic Controller checks the availability of the required two runways.
+If both runways are available, the airplane acquires them and enters the critical section.
+If one or both runways are unavailable, the airplane waits using a condition variable.
+After completing the operation, the airplane releases both runways.
+Waiting airplanes are notified and allowed to proceed based on availability.
+2.4 Methodology and Design Approach
+The system is designed using the monitor concept, which combines mutual exclusion and condition
+synchronization. A single monitor encapsulates runway allocation logic, ensuring that only one airplane can
+modify runway states at any given time.
+The design intentionally includes an unsafe mode to demonstrate how deadlock occurs when processes hold
+one resource and wait for another. In contrast, the safe mode enforces atomic allocation of resources, thereby
+eliminating the hold-and-wait condition.
+This approach is effective because it mirrors real operating system strategies where deadlock is avoided through
+careful resource allocation policies rather than resolved after occurrence.
+2.5 Data and Control Flow
+Control flow in the system is driven by thread execution and synchronization events. Data flow involves the
+status of runways and airplane states, which are updated only within the monitor. Condition variables manage
+waiting and signaling between threads, ensuring orderly execution.
+TECHNOLOGIES USED
+3.1 Airplane (Thread)
+Each airplane represents an independent thread. Its purpose is to simulate concurrent execution. The thread
+transitions through different states depending on runway availability. Using threads allows the system to
+accurately model real-time concurrency and synchronization issues.
+3.2 Runways (Shared Resources)
+Runways are shared resources that can be occupied by only one airplane at a time. Each airplane requires two
+runways simultaneously, which creates the possibility of deadlock when resources are not allocated carefully.
+3.3 Traffic Controller (Monitor)
+The Traffic Controller acts as a monitor, providing mutual exclusion and condition synchronization. It ensures
+that runway allocation is performed safely and prevents race conditions.
+3.4 Condition Variables
+Condition variables are used to block airplanes when runways are unavailable and to signal waiting airplanes
+when runways are released. This mechanism prevents busy waiting and improves system efficiency.
+3.5 Software Tools and Technologies
+The project is implemented as a software simulation using multithreading concepts. Visualization components
+are used to display airplane states, runway occupancy, and system logs in real time, enhancing clarity and
+understanding.
+APPLICATIONS
+Operating Systems:
+Synchronization techniques similar to those demonstrated in this project are used in process scheduling, CPU
+allocation, and memory management to ensure safe concurrent execution.
+Database Management Systems:
+Resource locking mechanisms are applied to prevent deadlocks and maintain data consistency during
+concurrent transactions.
+Traffic Control Systems:
+Controlled resource allocation is used to safely manage the movement of vehicles or aircraft, avoiding
+collisions and congestion.
+Cloud Computing Platforms:
+Shared computing resources such as virtual machines, storage, and network bandwidth are managed using
+synchronization techniques to serve multiple users efficiently.
+Distributed Systems:
+Monitors and condition variables are used to coordinate access to shared services and resources across multiple
+distributed nodes.
+Manufacturing and Industrial Automation:
+Similar synchronization logic is applied to allocate machines and tools among multiple production tasks
+without conflict.
+Computer Networks:
+Network routers and switches manage packet queues and shared buffers using synchronization principles to
+ensure reliable and efficient data transmission.
+OUTPUT
+The project successfully demonstrates both deadlock formation and deadlock avoidance. In deadlock
+demonstration mode, airplanes acquire one runway and wait indefinitely for the second, resulting in a circular
+wait condition. The system visually indicates the deadlock state, helping users understand how deadlock occurs.
+In safe mode, the monitor enforces atomic allocation of both runways, preventing deadlock. The simulation
+runs continuously without any airplane being permanently blocked. The system efficiently manages resources,
+ensures fairness, and avoids starvation.
+The results confirm that proper synchronization mechanisms significantly improve system reliability and
+correctness.
+.
+.
+CONCLUSION
+Clear Demonstration of Core OS Concepts:
+This project provides a clear and practical demonstration of the Dining Philosophers Problem using an Airport
+Runway Management System analogy. Abstract operating system concepts are mapped to a real-world
+scenario, making them easier to understand and relate to practical systems.
+Effective Explanation of Deadlock:
+The project successfully demonstrates how deadlock can occur when multiple concurrent processes compete for
+limited shared resources. It clearly explains the conditions required for deadlock formation, including mutual
+exclusion, hold-and-wait, no preemption, and circular wait.
+Deadlock Avoidance Using Synchronization Techniques:
+Deadlock avoidance is effectively implemented using monitors and condition variables. The Traffic Controller
+(monitor) ensures controlled access to runways, preventing unsafe resource allocation and eliminating the
+possibility of deadlock in safe mode.
+Simulation-Based Learning Approach:
+The simulation-based design allows users to visually observe thread states, resource allocation, waiting
+conditions, and system behavior in real time. This approach enhances learning, analysis, and evaluation of
+synchronization mechanisms.
+Academic Effectiveness:
+Although the system is a conceptual simulation rather than a real airport control application, it successfully
+meets its academic objectives by clearly demonstrating key operating system principles such as concurrency,
+synchronization, and deadlock management.
+Future Scope and Enhancements:
+The project can be extended by incorporating priority-based scheduling, advanced real-time graphical
+animations, and integration with actual operating system threading libraries. These enhancements would allow
+deeper experimentation and closer alignment with real-world operating system implementations.
+Overall Outcome:
+Overall, the project serves as a strong foundational model for understanding resource synchronization and
+deadlock management in operating systems, making it a valuable learning tool for undergraduate students.
