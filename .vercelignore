@@ -1,9 +1,0 @@
-backend/
-src/
-data/
-venv/
-*.py
-*.md
-!.vercelignore
-!vercel.json
-ui-react/node_modules/
