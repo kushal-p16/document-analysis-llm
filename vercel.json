@@ -1,15 +1,4 @@
 {
   "buildCommand": "cd ui-react && npm install && npm run build",
-  "outputDirectory": "ui-react/dist",
-  "framework": "vite",
-  "rewrites": [
-    {
-      "source": "/upload",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/ask",
-      "destination": "/api/index.py"
-    }
-  ]
+  "outputDirectory": "ui-react/dist"
 }
