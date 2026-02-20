@@ -4,7 +4,15 @@ __pycache__/
 .gitignore
 .env
 *.pyc
-node_modules/
-.DS_Store
 .pytest_cache/
 .venv/
+*.py
+src/
+api/
+Dockerfile
+railway.json
+requirements.txt
+fastapi_server.py
+backend.py
+data/
+outputs/

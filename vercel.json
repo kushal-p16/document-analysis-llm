@@ -1,4 +1,0 @@
-{
-  "buildCommand": "cd ui-react && npm install && npm run build",
-  "outputDirectory": "ui-react/dist"
-}
