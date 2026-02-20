@@ -5,7 +5,7 @@ from backend import PDFEngine
 import tempfile
 
 app = FastAPI()
-engine = PDFEngine()
+engine = None  # Lazy initialization
 
 # Allow common frontend dev origins (Vite default 5173) and localhost
 app.add_middleware(
@@ -22,6 +22,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+def get_engine():
+    """Lazy initialization of PDFEngine"""
+    global engine
+    if engine is None:
+        engine = PDFEngine()
+    return engine
+
 # Schema for /ask endpoint
 class AskRequest(BaseModel):
     question: str
@@ -31,19 +38,22 @@ class AskRequest(BaseModel):
 @app.post("/upload")
 async def upload_pdf(file: UploadFile = File(...)):
     try:
+        # Get or initialize engine
+        pdf_engine = get_engine()
+        
         # Save PDF temporarily
         with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
             tmp.write(await file.read())
             pdf_path = tmp.name
 
         # Process PDF with Groq
-        result = engine.load_pdf(pdf_path)
+        result = pdf_engine.load_pdf(pdf_path)
 
         return {
             "status": "success",
             "summary": result["summary"],
             "keywords": result.get("keywords", []),
-            "passages": engine.passages,   # send passages to frontend
+            "passages": pdf_engine.passages,   # send passages to frontend
         }
 
     except Exception as e:
@@ -54,10 +64,13 @@ async def upload_pdf(file: UploadFile = File(...)):
 @app.post("/ask")
 async def ask_question(payload: AskRequest):
     try:
+        # Get or initialize engine
+        pdf_engine = get_engine()
+        
         # Set passages coming from frontend
-        engine.passages = payload.passages
+        pdf_engine.passages = payload.passages
 
-        llm_result = engine.ask(payload.question)
+        llm_result = pdf_engine.ask(payload.question)
 
         return {
             "status": "success",
