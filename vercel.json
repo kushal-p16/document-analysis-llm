@@ -5,8 +5,7 @@
   "regions": ["iad1"],
   "functions": {
     "api/index.py": {
-      "runtime": "python3.11",
-      "requirements": "requirements.txt"
+      "runtime": "python3.11"
     }
   },
   "rewrites": [
@@ -18,8 +17,5 @@
       "source": "/ask",
       "destination": "/api/index.py"
     }
-  ],
-  "env": {
-    "VITE_API_URL": ""
-  }
+  ]
 }
