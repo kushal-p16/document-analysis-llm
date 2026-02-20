@@ -1,0 +1,11 @@
+{
+  "buildCommand": "cd ui-react && npm run build",
+  "outputDirectory": "ui-react/dist",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://document-analysis-llm-api.vercel.app/api/:path*"
+    }
+  ]
+}
