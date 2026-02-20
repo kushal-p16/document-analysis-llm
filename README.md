@@ -165,7 +165,39 @@ Response:
 }
 ```
 
-## 🖼 Screenshots (Add later)
+## � Deployment
+
+### ⚠️ Why NOT Vercel?
+
+Vercel was initially attempted but encountered issues:
+- **Module Resolution:** Vercel's build system struggles with resolving relative paths in Vite projects with complex configurations
+- **Configuration Complexity:** Vercel requires specific `vercel.json` setups that conflicted with the dual-deployment architecture (frontend + Railway backend)
+- **Build Inconsistencies:** Multiple configuration attempts resulted in repeated build failures
+
+### ✅ Deployed on Netlify
+
+**Frontend:** Deployed on [Netlify](https://netlify.com) with automatic builds from GitHub.
+
+**Backend:** Running on [Railway](https://railway.app) as a Docker container (see `Dockerfile` and `railway.json`).
+
+**Configuration:**
+- Frontend automatically builds from `ui-react/` directory
+- Netlify redirects all routes to `index.html` for React routing
+- Environment variables in Netlify:
+  - `VITE_API_URL`: Points to Railway backend at `https://document-analysis-llm-production.up.railway.app`
+
+**To Deploy:**
+1. Push code to GitHub
+2. Connect your GitHub repo to Netlify
+3. Set Root Directory to `ui-react`
+4. Build Command: `npm install && npm run build`
+5. Publish Directory: `dist`
+6. Add environment variable: `VITE_API_URL=https://document-analysis-llm-production.up.railway.app`
+7. Deploy!
+
+See `netlify.toml` for automated configuration.
+
+## �🖼 Screenshots (Add later)
 
 /screenshots/home.png
 /screenshots/upload.png
@@ -177,9 +209,9 @@ Response:
 - Add PDF highlighting
 - Provide downloadable summaries
 - Convert results to DOCX/PDF
-- Deploy on Render / Vercel / Railway
 - Support multiple files
 - Database for saved documents
+- Advanced analytics dashboard
 
 ## ⭐ Credits
 

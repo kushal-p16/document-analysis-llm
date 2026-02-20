@@ -1,0 +1,14 @@
+[build]
+  command = "cd ui-react && npm install && npm run build"
+  publish = "ui-react/dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[context.production]
+  environment = { VITE_API_URL = "https://document-analysis-llm-production.up.railway.app" }
+
+[context.deploy-preview]
+  environment = { VITE_API_URL = "https://document-analysis-llm-production.up.railway.app" }
