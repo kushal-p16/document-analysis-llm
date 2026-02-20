@@ -4,8 +4,8 @@ import UploadZone from "@/components/UploadZone";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ResultsPanel from "@/components/ResultsPanel";
 
-// Backend URL from .env
-const API = import.meta.env.VITE_API_URL;
+// Backend API - uses same origin on Vercel or localhost for local dev
+const API = import.meta.env.VITE_API_URL || "";
 
 const Index = () => {
   const [file, setFile] = useState<File | null>(null);

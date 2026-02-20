@@ -3,7 +3,7 @@ import { FileText, Tag, MessageCircle, Send, Bot, Sparkles } from "lucide-react"
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_URL || "";
 
 const ResultsPanel = ({ fileName, pdfData }: { fileName: string; pdfData: any }) => {
   const [question, setQuestion] = useState("");

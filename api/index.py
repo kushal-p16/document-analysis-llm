@@ -7,22 +7,26 @@ import os
 
 # Add parent directory to path to import backend
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from backend import PDFEngine
 
-app = FastAPI()
-engine = PDFEngine()
+try:
+    from backend import PDFEngine
+except ImportError:
+    # Fallback if import fails
+    print("Warning: Could not import PDFEngine")
+    PDFEngine = None
+
+app = FastAPI(title="PDF Analyst API")
+
+# Initialize engine only if import successful
+if PDFEngine:
+    engine = PDFEngine()
+else:
+    engine = None
 
 # CORS configuration for Vercel deployment
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:8080",
-        "http://127.0.0.1:8000",
-        "http://localhost:8000",
-        "https://*.vercel.app",  # Allow all Vercel deployments
-    ],
+    allow_origins=["*"],  # Allow all origins for development
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -34,8 +38,18 @@ class AskRequest(BaseModel):
     passages: list[str]
 
 
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for Vercel"""
+    return {"status": "ok", "service": "PDF Analyst API"}
+
+
 @app.post("/upload")
 async def upload_pdf(file: UploadFile = File(...)):
+    """Upload and analyze PDF"""
+    if not engine:
+        return {"status": "error", "message": "Backend engine not initialized"}
+    
     try:
         # Save PDF temporarily
         with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
@@ -53,12 +67,16 @@ async def upload_pdf(file: UploadFile = File(...)):
         }
 
     except Exception as e:
-        print("UPLOAD ERROR:", e)
-        return {"status": "error", "message": str(e)}
+        print(f"UPLOAD ERROR: {str(e)}")
+        return {"status": "error", "message": f"Upload failed: {str(e)}"}
 
 
 @app.post("/ask")
 async def ask_question(payload: AskRequest):
+    """Answer question about PDF"""
+    if not engine:
+        return {"status": "error", "message": "Backend engine not initialized"}
+    
     try:
         engine.passages = payload.passages
         llm_result = engine.ask(payload.question)
@@ -69,5 +87,6 @@ async def ask_question(payload: AskRequest):
         }
 
     except Exception as e:
-        print("ASK ERROR:", e)
-        return {"status": "error", "message": str(e)}
+        print(f"ASK ERROR: {str(e)}")
+        return {"status": "error", "message": f"Question failed: {str(e)}"}
+
